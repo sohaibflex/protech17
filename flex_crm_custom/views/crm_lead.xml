@@ -98,7 +98,11 @@
                         <field name="purchase_subj" invisible="tender_purchase_request != True"/>
                         <field name="purchase_deadline" invisible="tender_purchase_request != True"/>
                         <field name="purchase_value" invisible="tender_purchase_request != True"/>
-                        <field name="is_purchased" invisible="tender_purchase_request != True"/>
+                        <field name="need_requests_tend" invisible="1"/>
+                        <field name="is_purchased_tend_request" invisible="1"/>
+                        <field name="is_purchased" invisible="tender_purchase_request != True or is_purchased_tend_request != True"/>
+                        <button name="approve_tend_purchase_request" type="object" class="btn-primary" string="BDM Approve"
+                                groups="flex_crm_custom.access_bum" invisible="need_requests_tend != True"/>
                     </group>
                 </page>
                 <page string="Bid Bond" invisible="need_tendering != True">
@@ -114,7 +118,11 @@
                         <field name="bid_purchase_subject" invisible="bid_purchase_request != True"/>
                         <field name="bid_purchase_deadline" invisible="bid_purchase_request != True"/>
                         <field name="bid_purchase_value" invisible="bid_purchase_request != True"/>
-                        <field name="is_purchased_bid" invisible="bid_purchase_request != True"/>
+                        <field name="is_purchased_bid_request" invisible="1"/>
+                        <field name="is_purchased_bid" invisible="bid_purchase_request != True or is_purchased_bid_request != True"/>
+                        <field name="need_requests_bid" invisible="1"/>
+                        <button name="approve_bid_purchase_request" type="object" class="btn-primary" string="BDM Approve"
+                                groups="flex_crm_custom.access_bum" invisible="need_requests_bid != True"/>
                     </group>
                 </page>
             </xpath>
