@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="division_view_tree" model="ir.ui.view">
+        <field name="name">division_view_tree</field>
+        <field name="model">division.name</field>
+        <field name="arch" type="xml">
+            <tree string="division_tree" editable="bottom">
+                <field name="division_name" required="1"/>
+                <field name="business_division_manager" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="division_view_tree_action" model="ir.actions.act_window">
+        <field name="name">Divisions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">division.name</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="crm_division_menu"
+        name="Divisions"
+        parent="crm.crm_menu_config"
+        action="flex_crm_custom.division_view_tree_action"
+        sequence="40"/>
+</odoo>

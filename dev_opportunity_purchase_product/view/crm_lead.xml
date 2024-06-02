@@ -1,0 +1,47 @@
+<openerp>
+    <data>
+
+        <record id="crm_lead_product_inherit_view" model="ir.ui.view">
+            <field name="name">crm.lead.product.inherit.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Crm Product Line">
+                        <field name="purchase_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id" domain="[('purchase_ok', '=', True)]" required="1"/>
+                                <field name="partner_id"
+                                       context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+                                <field name="distribution_id"
+                                       context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="uom_id"/>
+                                <field name="price_unit"/>
+                                <field name="is_po_created" readonly="1" optional="hide"/>
+                                <button name="send_mail_to_all" type="object" string="Send Email" class="oe_highlight"/>
+                            </tree>
+                        </field>
+                        <button name="send_mail_to_all" type="object" string="send emails"
+                                class="oe_highlight"/>
+                    </page>
+                </xpath>
+                <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                    <button string="Create RFQ" name="create_purchase_order" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@class='oe_stat_button']" position="after">
+                    <field name="po_ids" invisible="1"/>
+                    <button class="oe_stat_button" name="purchase_order_status" type="object" icon="fa-truck"
+                            invisible="po_count &#60;=0">
+                        <field name="po_count" widget="statinfo" string="RFQ"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
+
+

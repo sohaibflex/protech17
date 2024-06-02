@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_task_wizard,access_task_wizard,model_task_wizard,base.group_user,1,1,1,1
+access_time_frame,access_time_frame,model_time_frame,base.group_user,1,1,1,1
+access_activity_task_assign,access_activity_task_assign,model_activity_task_assign,base.group_user,1,1,1,1
+access_view_task_wizard,access_view_task_wizard,model_view_task_wizard,base.group_user,1,1,1,1
+access_view_task_details,access_view_task_details,model_view_task_details,base.group_user,1,1,1,1

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="module_crm_custom_group">
+        <field name="name">CRM Custom Group</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="access_submit_lead" model="res.groups">
+        <field name="name">Access Submit Lead</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_bum" model="res.groups">
+        <field name="name">Business Division Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_opp" model="res.groups">
+        <field name="name">Access Opportunity</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_lost" model="res.groups">
+        <field name="name">Access Lost</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_eranch" model="res.groups">
+        <field name="name">Access Enrich</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_restore" model="res.groups">
+        <field name="name">Access Restore</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record model="ir.module.category" id="module_crm_custom_group">
+        <field name="name">CRM Lead Assign/Access</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="access_product_manager" model="res.groups">
+        <field name="name">Product Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_pre_sale_engineer" model="res.groups">
+        <field name="name">Pre-Sale Engineer</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_bid_manager" model="res.groups">
+        <field name="name">Bid Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+     <record id="access_sale_account_manager" model="res.groups">
+        <field name="name">Sale Account Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_finance_manager" model="res.groups">
+        <field name="name">Finance Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_channed_team" model="res.groups">
+        <field name="name">Sale Manager</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+    <record id="access_based_on_rule_crm" model="res.groups">
+        <field name="name">Access Based On Rule CRM</field>
+        <field name="category_id" ref="flex_crm_custom.module_crm_custom_group"/>
+    </record>
+</odoo>

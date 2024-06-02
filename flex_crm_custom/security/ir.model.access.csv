@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_validity,access_validity,model_validity,base.group_user,1,1,1,1
+access_division_name,access_division_name,model_division_name,base.group_user,1,1,1,1
+access_division_name,access_division_name,model_division_name,base.group_user,1,1,1,1
+access_quartar,access_quartar,model_quartar,base.group_user,1,1,1,1

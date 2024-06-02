@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_odoo_call_same_user_to_fields" model="ir.rule">
+            <field name="name">rule based on access</field>
+            <field ref="model_crm_lead" name="model_id"/>
+            <field name="domain_force">['|','|','|',('user_id','=',user.id),('product_manager', 'in',user.id),('bdm_manager','in',user.id),('bid_team_assigned', 'in', user.id)]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('flex_crm_custom.access_based_on_rule_crm'))]"/>
+        </record>
+
+    </data>
+</odoo>

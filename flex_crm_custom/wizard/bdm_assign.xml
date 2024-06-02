@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_bdm_manager_form" model="ir.ui.view">
+        <field name="name">view_bdm_manager_form</field>
+        <field name="model">bum.division.assign</field>
+        <field name="arch" type="xml">
+            <form>
+                <label for="bdm_manager" string="Business Division Manager"/>
+                <field name="bdm_manager" widget="many2many_tags"/>
+                <footer>
+                    <button name="confirm_assign" string="Assign" type="object" class="btn-primary"/>
+                    <button name="cancel_assign" string="Cancel" type="object" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_view_product_assign" model="ir.actions.act_window">
+        <field name="name">Business Division Manager</field>
+        <field name="res_model">bum.division.assign</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_bdm_manager_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

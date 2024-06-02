@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit777" model="ir.ui.view">
+        <field name="name">crm_lead_view_form_inherit777</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <!--            New Edit-->
+            <xpath expr="//header" position="inside">
+                <!--                <button name="action_submit" type="object" class="btn-primary" string="Submit"-->
+                <!--                        groups="flex_crm_custom.access_submit_lead"-->
+                <!--                        invisible="state != 'draft' or type == 'opportunity'"/>-->
+                <button name="action_sale_account_manager" type="object" class="btn-primary"
+                        string="Sale Account Manager"
+                        groups="flex_crm_custom.access_sale_account_manager"
+                        invisible="state != 'sale_account_manager' or type == 'opportunity'"/>
+                <button name="action_opp" type="object" class="btn-primary" string="BDM Manager"
+                        groups="flex_crm_custom.access_bum" help="Business Division Manager"
+                        invisible="state != 'business_unit_manager' or type == 'opportunity'"/>
+                <field name="state" widget="statusbar"
+                       statusbar_visible="sale_account_manager,business_unit_manager,opp,lost"
+                       invisible="check_active or type == 'opportunity'"/>
+                <field name="check_active" invisible="1"/>
+            </xpath>
+            <xpath expr="//header/button[@name='%(crm.crm_lead_lost_action)d'][2]" position="attributes">
+                <attribute name="invisible">type == 'opportunity' or state != 'opp' or probability == 0 and not active
+                </attribute>
+                <attribute name="groups">flex_crm_custom.access_lost</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+                <attribute name="invisible">type == 'opportunity' or not active or state != 'opp'</attribute>
+                <attribute name="groups">flex_crm_custom.access_opp</attribute>
+            </xpath>
+            <xpath expr="//button[@name='iap_enrich'][1]" position="attributes">
+                <attribute name="invisible">not show_enrich_button or type == 'opportunity' or state !='opp'</attribute>
+                <attribute name="groups">flex_crm_custom.access_eranch</attribute>
+            </xpath>
+            <xpath expr="//button[@name='toggle_active']" position="attributes">
+                <attribute name="invisible">probability &gt; 0 or active or state != 'lost'</attribute>
+                <attribute name="groups">flex_crm_custom.access_restore</attribute>
+            </xpath>
+            <!--            Edit In Current View-->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">state != 'sale_account_manager'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='lead_partner']/field[@name='partner_id']" position="attributes">
+                <attribute name="readonly">state != 'sale_account_manager'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='lead_partner']/field[@name='partner_id']" position="after">
+                <field name="vendor" widget="many2many_tags" required="1"/>
+            </xpath>
+            <xpath expr="//group[@name='lead_partner']" position="after">
+                <group string="Assigns" invisible="type == 'opportunity'">
+                    <field name="sale_account_manager" widget="many2many_tags"/>
+                    <field name="division" widget="many2many_tags"/>
+                    <field name="finance" widget="many2many_tags"/>
+                    <field name="bdm_manager" readonly="1" widget="many2many_tags"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="after">
+                <field name="vendor" widget="many2many_tags" required="1"/>
+
+                <field name="value_estimate"/>
+                <field name="forcast" widget="radio"/>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']" position="after">
+                <group string="Assigns" invisible="type == 'lead'">
+                    <field name="sale_account_manager" widget="many2many_tags"/>
+                    <field name="division" widget="many2many_tags"/>
+                    <field name="finance" widget="many2many_tags"/>
+                    <field name="bdm_manager" readonly="1" widget="many2many_tags"/>
+                    <field name="product_manager" readonly="1" widget="many2many_tags"/>
+                    <field name="bid_team_assigned" readonly="1" widget="many2many_tags"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Dr Registration">
+                    <group string="Dr Registration">
+                        <field name="deal_id"/>
+                        <field name="deal_expiry"/>
+                        <field name="req_ext" invisible="deal_expiry == False"/>
+                    </group>
+                </page>
+                <page string="Tendering">
+                    <group string="Tendering">
+                        <field name="need_tendering"/>
+                        <field name="tendering_subject" invisible="need_tendering != True"/>
+                        <field name="tendering_state" widget="radio" invisible="need_tendering != True"/>
+                        <field name="submit_deadline" invisible="need_tendering != True"/>
+                        <field name="delivery_method" invisible="need_tendering != True"/>
+                        <field name="clarification_deadline" invisible="need_tendering != True"/>
+                    </group>
+                    <group string="Tendering Purchase" invisible="need_tendering != True">
+                        <field name="tender_purchase_request"/>
+                        <field name="purchase_subj" invisible="tender_purchase_request != True"/>
+                        <field name="purchase_deadline" invisible="tender_purchase_request != True"/>
+                        <field name="purchase_value" invisible="tender_purchase_request != True"/>
+                        <field name="is_purchased" invisible="tender_purchase_request != True"/>
+                    </group>
+                </page>
+                <page string="Bid Bond" invisible="need_tendering != True">
+                    <group string="Bid Point">
+                        <field name="need_bid_point"/>
+                        <field name="subject" invisible="need_bid_point != True"/>
+                        <field name="vendor_opp" widget="many2many_tags" invisible="need_bid_point != True"/>
+                        <field name="validity" invisible="need_bid_point != True"/>
+                        <field name="value" invisible="need_bid_point != True"/>
+                    </group>
+                    <group string="Bid Point Purchase" invisible="need_bid_point != True">
+                        <field name="bid_purchase_request"/>
+                        <field name="bid_purchase_subject" invisible="bid_purchase_request != True"/>
+                        <field name="bid_purchase_deadline" invisible="bid_purchase_request != True"/>
+                        <field name="bid_purchase_value" invisible="bid_purchase_request != True"/>
+                        <field name="is_purchased_bid" invisible="bid_purchase_request != True"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_users_form_inherit_flex_666" model="ir.ui.view">
+        <field name="name">view_users_form_inherit_flex_666</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='login']" position="after">
+                <label for="direct_manager_id" string="Direct Manager"/>
+                <field name="direct_manager_id" widget="many2many_tags"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
