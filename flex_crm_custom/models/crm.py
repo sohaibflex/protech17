@@ -77,7 +77,7 @@ class CrmLead(models.Model):
                     rec.env['mail.mail'].sudo().create({
                         'subject': 'Need Bid Point',
                         'email_from': rec.env.user.email,
-                        'email_to': rec.finance.mapped('email'),
+                        'email_to': ','.join(map(str, rec.finance.mapped('email'))),
                         'body_html': f'<p><a href="{opportunity_url}">{rec.name}</a></p><p>Bid Point Name: {rec.subject}</p><p>Bid Point Value: {rec.value}</p><p>Vendors:{rec.vendor_opp.name}</p><p>Validity: {rec.validity.name}</p>',
                     }).send()
                 elif rec.env.user.notification_type == 'inbox':
@@ -99,9 +99,9 @@ class CrmLead(models.Model):
     bid_purchase_subject = fields.Char(string='Purchase Subject')
     bid_purchase_value = fields.Float(string='Purchase Value')
     bid_purchase_deadline = fields.Date(string='Purchase Deadline')
-    need_requests_bid = fields.Boolean(string='Need Requests',default=False)
-    is_purchased_bid_request = fields.Boolean(string='Is Purchased request',default=False)
-    is_purchased_bid = fields.Boolean(string='Is Purchased',default=False)
+    need_requests_bid = fields.Boolean(string='Need Requests', default=False)
+    is_purchased_bid_request = fields.Boolean(string='Is Purchased request', default=False)
+    is_purchased_bid = fields.Boolean(string='Is Purchased', default=False)
 
     @api.onchange('is_purchased_bid')
     def onchange_is_purchased_bid(self):
@@ -112,7 +112,6 @@ class CrmLead(models.Model):
             }
         }
 
-
     @api.onchange('bid_purchase_request', 'bid_purchase_value')
     def _onchange_bid_purchase_request(self):
         for rec in self:
@@ -122,7 +121,7 @@ class CrmLead(models.Model):
                     rec.env['mail.mail'].sudo().create({
                         'subject': 'Bid Purchase Request',
                         'email_from': rec.env.user.email,
-                        'email_to': rec.bdm_manager.mapped('email'),
+                        'email_to': ','.join(map(str, rec.bdm_manager.mapped('email'))),
                         'body_html': f'<p><a href="{opportunity_url}">{rec.name}</a></p><p>Purchase Request Name: {rec.bid_purchase_subject}</p><p>Purchase Request Value: {rec.bid_purchase_value}</p><p>Purchase Request Deadline: {rec.bid_purchase_deadline}</p>',
                     }).send()
                 elif rec.env.user.notification_type == 'inbox':
@@ -142,7 +141,7 @@ class CrmLead(models.Model):
                 rec.env['mail.mail'].sudo().create({
                     'subject': 'Bid Purchase Request Approved',
                     'email_from': rec.env.user.email,
-                    'email_to': rec.finance.mapped('email'),
+                    'email_to': ','.join(map(str, rec.finance.mapped('email'))),
                     'body_html': f'<p><a href="{opportunity_url}">{rec.name}</a></p><p>Purchase Request Name: {rec.bid_purchase_subject}</p><p>Purchase Request Value: {rec.bid_purchase_value}</p><p>Purchase Request Deadline: {rec.bid_purchase_deadline}</p>',
                 }).send()
             elif rec.env.user.notification_type == 'inbox':
@@ -155,8 +154,6 @@ class CrmLead(models.Model):
                 })
             rec.need_requests_bid = False
             rec.is_purchased_bid_request = True
-
-
 
     # dr register
     deal_id = fields.Char(string='Deal ID')
@@ -184,8 +181,8 @@ class CrmLead(models.Model):
         ('soft_copy', 'Soft Copy'),
         ('by_email', 'By Email'),
     ], string='Delivery Method')
-    is_purchased_tend_request = fields.Boolean(string='Is Purchased request',default=False)
-    need_requests_tend = fields.Boolean(string='Need Requests',default=False)
+    is_purchased_tend_request = fields.Boolean(string='Is Purchased request', default=False)
+    need_requests_tend = fields.Boolean(string='Need Requests', default=False)
     is_purchased = fields.Boolean(string='Is Purchased')
     clarification_deadline = fields.Date(string='Clarification Deadline')
     tender_purchase_request = fields.Boolean(string='Tender Purchase Request')
@@ -214,7 +211,7 @@ class CrmLead(models.Model):
                     rec.env['mail.mail'].sudo().create({
                         'subject': 'Tender Purchase Approve',
                         'email_from': rec.env.user.email,
-                        'email_to': rec.bdm_manager.mapped('email'),
+                        'email_to': ','.join(map(str, rec.bdm_manager.mapped('email'))),
                         'body_html': f'<p>Opportunity Name: <a href="{opportunity_url}">{rec.name}</a></p><p>Purchase Request Name: {rec.purchase_subj}</p><p>Purchase Request Value: {rec.purchase_value}</p><p>Purchase Request Deadline: {rec.purchase_deadline}</p>',
                     }).send()
                 elif rec.env.user.notification_type == 'inbox':
@@ -234,7 +231,7 @@ class CrmLead(models.Model):
                 rec.env['mail.mail'].sudo().create({
                     'subject': 'Tendering Purchase Request Approved',
                     'email_from': rec.env.user.email,
-                    'email_to': rec.finance.mapped('email'),
+                    'email_to': ','.join(map(str, rec.finance.mapped('email'))),
                     'body_html': f'<p><a href="{opportunity_url}">{rec.name}</a></p><p>Purchase Request Name: {rec.purchase_subj}</p><p>Purchase Request Value: {rec.purchase_value}</p><p>Purchase Request Deadline: {rec.bid_purchase_deadline}</p>',
                 }).send()
             elif rec.env.user.notification_type == 'inbox':
@@ -267,7 +264,7 @@ class CrmLead(models.Model):
                 rec.env['mail.mail'].sudo().create({
                     'subject': 'Lead Name:' + " " + rec.name,
                     'email_from': rec.env.user.email,
-                    'email_to': rec.bdm_manager.mapped('email'),
+                    'email_to': ','.join(map(str, rec.bdm_manager.mapped('email'))),
                     'body_html': f'</p><p>Need To Convert To Opportunity</p><p>Lead Name: {rec.name}</p><p>Lead ID: {rec.id}</p>',
                 }).send()
             elif rec.env.user.notification_type == 'inbox':
@@ -511,7 +508,7 @@ class Lead2OpportunityPartner(models.TransientModel):
                     rec.env['mail.mail'].sudo().create({
                         'subject': 'Opportunity Assigned As Product Manager From Business Division Manager',
                         'email_from': rec.env.user.email,
-                        'email_to': rec.user_ids.mapped('email'),
+                        'email_to': ','.join(map(str, rec.user_ids.mapped('email'))),
                         'body_html': email_body,
                     })
                 elif rec.env.user.notification_type == 'inbox':
@@ -527,7 +524,7 @@ class Lead2OpportunityPartner(models.TransientModel):
                     rec.env['mail.mail'].sudo().create({
                         'subject': 'Opportunity Assigned As Bid Team Assigned From Business Division Manager',
                         'email_from': rec.env.user.email,
-                        'email_to': rec.bid_team_assigneds.mapped('email'),
+                        'email_to': ','.join(map(str, rec.bid_team_assigneds.mapped('email'))),
                         'body_html': email_body,
                     })
                 elif rec.env.user.notification_type == 'inbox':

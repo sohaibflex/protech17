@@ -15,7 +15,7 @@ class ProductAssign(models.TransientModel):
                 rec.env['mail.mail'].sudo().create({
                     'subject': 'Lead Name:' + " " + rec.lead_id.name,
                     'email_from': rec.env.user.email,
-                    'email_to': rec.bdm_manager.mapped('email'),
+                    'email_to': ','.join(map(str, rec.bdm_manager.mapped('email'))),
                     'body_html': f'</p><p>Need To Convert To Opportunity</p><p>Lead Name: {rec.lead_id.name}</p><p>Lead ID: {rec.lead_id.id}</p>',
                 }).send()
             elif rec.env.user.notification_type == 'inbox':
